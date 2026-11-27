@@ -5,24 +5,38 @@ using namespace std;
 
 int main()
 {
-	string x, y, z;
+	ofstream obj1("welcome.txt");
 
-	ifstream obj1("fruit.txt");
-
-	obj1 >> x >> y >> z;
-
-	obj1.close();
-
-	ofstream obj2("fruit.txt", ios::app);
-
-	if (!obj2.is_open())
+	if (!obj1.is_open())
 	{
-		cout << "Erorr";
+		cout << "Erorr" << endl;
 	}
 	else
 	{
-		obj2 << "Fresh Fruits" << endl;
+		obj1 << "Hello Everybody";
 
-		obj2.close();
+		obj1.seekp(11, ios::beg);
+		obj1 << "one" << endl;
+
+		obj1.close();
+	}
+
+	string text;
+	ifstream obj2("welcome.txt");
+
+	getline(obj2, text);
+
+	obj2.close();
+
+	ofstream obj3("welcome.txt", ios::app);
+
+	if (!obj3.is_open())
+	{
+		cout << "Erorr" << endl;
+	}
+	else
+	{
+		obj3 << text;
+		obj3.close();
 	}
 }
