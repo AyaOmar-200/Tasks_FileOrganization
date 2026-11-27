@@ -2,41 +2,91 @@ using namespace std;
 #include <iostream>
 #include<string>
 #include<fstream>
+#include <vector>
+
+
+struct person
+{
+	string name;
+	int age;
+};
+
 
 int main()
 {
-	ofstream obj1("welcome.txt");
+	int x, y = 0;
+	cout << "enter number of persons" << endl;
+	cin >> x;
+	cout << "===================" << endl;
 
-	if (!obj1.is_open())
+	ofstream obj1("data.txt", ios::app);
+
+	person obj;
+
+	cout << "enter data" << endl;
+	cout << "=============" << endl;
+	while (y < x)
 	{
-		cout << "Erorr" << endl;
+		cout << "Name : ";
+		cin.ignore();
+		getline(cin, obj.name);
+		obj1 << obj.name;
+
+		cout << "Age : ";
+		cin >> obj.age;
+		obj1 << " " << obj.age << endl;
+
+		cout << "===================" << endl;
+
+		y++;
 	}
-	else
+
+	obj1.close();
+
+	ifstream obj2("data.txt");
+
+
+	vector <person> vec;
+
+
+	while (obj2 >> obj.name >> obj.age)
 	{
-		obj1 << "Hello Everybody";
-
-		obj1.seekp(11, ios::beg);
-		obj1 << "one" << endl;
-
-		obj1.close();
+		vec.push_back(obj);
 	}
-
-	string text;
-	ifstream obj2("welcome.txt");
-
-	getline(obj2, text);
 
 	obj2.close();
 
-	ofstream obj3("welcome.txt", ios::app);
+	int max = vec[0].age;
+	int min = vec[0].age;
 
-	if (!obj3.is_open())
+	for (int i = 0; i < vec.size(); i++)
 	{
-		cout << "Erorr" << endl;
+
+		if (vec[i].age >= max)
+		{
+			max = vec[i].age;
+		}
+
+		if (vec[i].age <= min)
+		{
+			min = vec[i].age;
+		}
 	}
-	else
+
+	ofstream obj3("results.txt");
+
+	for (int i = 0; i < vec.size(); i++)
 	{
-		obj3 << text;
-		obj3.close();
+		if (max == vec[i].age)
+		{
+			obj3 << "older person : " << vec[i].name << " , At Age : " << max << endl;
+		}
+
+		if (min == vec[i].age)
+		{
+			obj3 << "younger person : " << vec[i].name << " , At Age : " << min << endl;
+		}
 	}
+
+	obj3.close();
 }
