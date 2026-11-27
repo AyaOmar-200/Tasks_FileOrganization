@@ -1,29 +1,46 @@
-
 using namespace std;
 #include <iostream>
 #include <string>
+#include <vector>
 #include <fstream>
+#include <algorithm>
 
 
 int main()
 {
-	string x, y, z;
+	string name;
+	ifstream obj1("main.txt");
 
-	ifstream obj1("fruit.txt");
+	vector <string> vec;
 
-	obj1 >> x >> y >> z;
-
-	obj1.close();
-
-	ofstream obj2("fruit.txt", ios::app);
-
-	if (!obj2.is_open())
+	if (obj1.good())
 	{
-		cout << "Erorr";
+		while (getline(obj1, name))
+		{
+			vec.push_back(name);
+		}
+
+		obj1.close();
 	}
 	else
 	{
-		obj2 << "Fresh Fruits" << endl;
+		cout << "Reading Erorr" << endl;
+	}
+
+	sort(vec.begin(), vec.end());
+
+	ofstream obj2("main.txt");
+
+	if (obj2.fail())
+	{
+		cout << "Writing Erorr" << endl;
+	}
+	else
+	{
+		for (int i = 0; i < vec.size(); i++)
+		{
+			obj2 << vec[i] << endl;
+		}
 
 		obj2.close();
 	}
