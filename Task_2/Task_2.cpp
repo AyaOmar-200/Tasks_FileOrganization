@@ -1,54 +1,48 @@
+
 using namespace std;
 #include <iostream>
-#include<fstream>
+#include <string>
+#include <vector>
+#include <fstream>
+#include <algorithm>
+
 
 int main()
 {
-	ofstream obj1("Pro.txt");
-	ofstream obj3("temporary.txt");
+	string name;
+	ifstream obj1("main.txt");
 
-	int grade;
-	cout << "enter grades" << endl;
+	vector <string> vec;
 
-	for (int i = 0; i < 5; i++)
+	if (obj1.good())
 	{
-		cin >> grade;
-		obj1 << grade << endl;
-	}
-
-	cout << "===================" << endl;
-
-	obj1.close();
-
-	ifstream obj2("Pro.txt");
-
-	int num, Dgrade;
-
-	cout << "enter grade you wanna delete" << endl;
-	cin >> Dgrade;
-
-	cout << "===================" << endl;
-
-	while (obj2 >> num)
-	{
-		if (num != Dgrade)
+		while (getline(obj1, name))
 		{
-			obj3 << num << endl;
+			vec.push_back(name);
 		}
-	}
 
-	obj2.close();
-	obj3.close();
-
-	remove("Pro.txt");
-	rename("temporary.txt", "Pro.txt");
-
-	if (obj3.fail())
-	{
-		cout << "stream error" << endl;
+		obj1.close();
 	}
 	else
 	{
-		cout << "stream success" << endl;
+		cout << "Reading Erorr" << endl;
+	}
+
+	sort(vec.begin(), vec.end());
+
+	ofstream obj2("main.txt");
+
+	if (obj2.fail())
+	{
+		cout << "Writing Erorr" << endl;
+	}
+	else
+	{
+		for (int i = 0; i < vec.size(); i++)
+		{
+			obj2 << vec[i] << endl;
+		}
+
+		obj2.close();
 	}
 }
