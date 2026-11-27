@@ -1,49 +1,54 @@
 using namespace std;
 #include <iostream>
-#include<string>
 #include<fstream>
-
-struct Student
-{
-	char name[20];
-	int id;
-	float grade;
-};
 
 int main()
 {
-	char name[20];
-	int id;
-	float grade;
-	char x = ' ';
+	ofstream obj1("Pro.txt");
+	ofstream obj3("temporary.txt");
 
-	ofstream obj("students.txt", ios::app);
+	int grade;
+	cout << "enter grades" << endl;
 
-	cout << "enter data of student" << endl;
-	while (x != 'n')
+	for (int i = 0; i < 5; i++)
 	{
-		cout << "name : ";
-		cin.getline(name, 20);
-
-		cout << "id : ";
-		cin >> id;
-
-		cout << "grade : ";
 		cin >> grade;
-
-		cout << "=================" << endl;
-
-		cout << "if you wanna continue enter y else enter n" << endl;
-		cin >> x;
-		cout << "=================" << endl;
-
-		cin.ignore();
-
-		obj << name << ", ";
-		obj << id << ", ";
-		obj << grade << " ";
-		obj << '$' << endl;
+		obj1 << grade << endl;
 	}
 
-	obj.close();
+	cout << "===================" << endl;
+
+	obj1.close();
+
+	ifstream obj2("Pro.txt");
+
+	int num, Dgrade;
+
+	cout << "enter grade you wanna delete" << endl;
+	cin >> Dgrade;
+
+	cout << "===================" << endl;
+
+	while (obj2 >> num)
+	{
+		if (num != Dgrade)
+		{
+			obj3 << num << endl;
+		}
+	}
+
+	obj2.close();
+	obj3.close();
+
+	remove("Pro.txt");
+	rename("temporary.txt", "Pro.txt");
+
+	if (obj3.fail())
+	{
+		cout << "stream error" << endl;
+	}
+	else
+	{
+		cout << "stream success" << endl;
+	}
 }
